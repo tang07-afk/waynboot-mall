@@ -43,3 +43,9 @@ front/
 **/src/main/resources/application-dev.yml
 **/src/main/resources/application-dev.yaml
 **/src/main/resources/application-dev.properties
+
+# Docker runtime data
+es/data/
+mysql/data/
+rabbitmq/log/
+redis/data/
