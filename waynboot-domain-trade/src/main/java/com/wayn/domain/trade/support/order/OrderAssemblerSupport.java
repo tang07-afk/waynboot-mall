@@ -37,6 +37,7 @@ public class OrderAssemblerSupport {
         order.setAddress(context.address().getProvince() + context.address().getCity()
                 + context.address().getCounty() + " " + context.address().getAddressDetail());
         order.setFreightPrice(context.freightPrice());
+        order.setFullReductionPrice(context.fullReductionPrice());
         order.setCouponPrice(context.couponPrice());
         order.setGoodsPrice(context.checkedGoodsPrice());
         order.setOrderPrice(context.orderTotalPrice());

@@ -4,7 +4,7 @@ spring:
         driverClassName: com.mysql.cj.jdbc.Driver
         # 主库数据源
         master:
-            jdbc-url: jdbc:mysql://127.0.0.1:3306/wayn_shop?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+            jdbc-url: jdbc:mysql://mysql:3306/wayn_shop?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
             username: root
             password: '@@123456Java'
             pool-name: hikariCP
@@ -25,16 +25,16 @@ spring:
 
     data:
         redis:
-            host: 127.0.0.1
+            host: redis
             port: 6379
-            password:
+            password: Aa@@1688
             database: 0
             timeout: 300
             lettuce:
                 shutdown-timeout: 100ms
     #配置rabbitMq 服务器
     rabbitmq:
-        host: 127.0.0.1
+        host: rabbitmq
         port: 5672
         username: guest
         password: guest

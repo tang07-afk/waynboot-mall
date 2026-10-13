@@ -541,7 +541,7 @@ public class RedisCache {
      *
      * @param reservedKey SKU 维度预占量 Key
      * @param orderKey 订单 SKU 维度预占幂等 Key
-     * @param number 释放数量，脚本优先使用 orderKey 内保存的数量
+//     * @param number 释放数量，脚本优先使用 orderKey 内保存的数量
      * @return 1=释放成功，0=预占不存在
      */
     public Long luaReleaseReservedStock(String reservedKey, String orderKey) {

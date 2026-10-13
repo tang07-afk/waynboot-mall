@@ -78,6 +78,11 @@ public class Order extends ShopBaseEntity implements Serializable {
     private BigDecimal freightPrice;
 
     /**
+     * 满减优惠
+     */
+    private BigDecimal fullReductionPrice;
+
+    /**
      * 优惠券减免
      */
     private BigDecimal couponPrice;

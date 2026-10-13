@@ -94,7 +94,14 @@ class OrderSubmitPersistenceSupportTest {
         cart.setProductId(30L);
         cart.setPrice(new BigDecimal("10.00"));
         cart.setNumber(1);
-        return new OrderSubmitContext(address, List.of(cart), new BigDecimal("10.00"), BigDecimal.ZERO,
-                new BigDecimal("10.00"), BigDecimal.ZERO, new BigDecimal("10.00"));
+        return new OrderSubmitContext(
+            address,
+            List.of(cart),
+            new BigDecimal("10.00"),
+            BigDecimal.ZERO,
+            BigDecimal.ZERO,
+            new BigDecimal("10.00"),
+            BigDecimal.ZERO,
+            new BigDecimal("10.00"));
     }
 }

@@ -75,6 +75,11 @@ public class OrderDetailVO implements Serializable {
     private BigDecimal freightPrice;
 
     /**
+     * 满减优惠金额
+     */
+    private BigDecimal fullReductionPrice;
+
+    /**
      * 优惠券减免
      */
     private BigDecimal couponPrice;

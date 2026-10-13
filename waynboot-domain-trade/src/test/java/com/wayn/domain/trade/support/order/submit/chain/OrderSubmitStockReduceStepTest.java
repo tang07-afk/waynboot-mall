@@ -8,6 +8,7 @@ import com.wayn.message.core.dto.OrderDTO;
 import com.wayn.util.exception.BusinessException;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -59,7 +60,7 @@ class OrderSubmitStockReduceStepTest {
         cart.setNumber(2);
         OrderSubmitChainContext context = OrderSubmitChainContext.single(orderDTO,
                 ignored -> new com.wayn.domain.trade.support.order.OrderSubmitContext(
-                        null, List.of(cart), null, null, null, null, null));
+                        null, List.of(cart), null, null, BigDecimal.ZERO ,null, null, null));
         context.buildSubmitContext();
         return context;
     }

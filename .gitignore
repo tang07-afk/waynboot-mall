@@ -36,6 +36,7 @@ mvnw*
 .m2/
 
 jars/
+
 front/
 .m2
 
@@ -49,3 +50,6 @@ es/data/
 mysql/data/
 rabbitmq/log/
 redis/data/
+
+# Nginx runtime logs
+nginx/log/

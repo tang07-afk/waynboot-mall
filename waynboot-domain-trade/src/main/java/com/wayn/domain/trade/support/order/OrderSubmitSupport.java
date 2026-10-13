@@ -7,6 +7,7 @@ import com.wayn.domain.api.promotion.entity.ShopMemberCoupon;
 import com.wayn.domain.api.trade.service.IAddressService;
 import com.wayn.domain.api.cart.service.ICartService;
 import com.wayn.domain.api.promotion.service.ShopMemberCouponService;
+import com.wayn.domain.promotion.support.fullreduction.FullReductionCalculateSupport;
 import com.wayn.domain.trade.support.order.submit.chain.OrderSubmitChain;
 import com.wayn.domain.trade.support.order.submit.chain.OrderSubmitChainContext;
 import com.wayn.domain.api.trade.request.OrderCommitReqVO;
@@ -52,6 +53,7 @@ public class OrderSubmitSupport {
     private final OrderValidationSupport orderValidationSupport;
     private final OrderSubmitMessageSupport orderSubmitMessageSupport;
     private final OrderSubmitChain orderSubmitChain;
+    private final FullReductionCalculateSupport fullReductionCalculateSupport;
 
     /**
      * 异步提交订单。
@@ -155,7 +157,13 @@ public class OrderSubmitSupport {
         BigDecimal freightPrice = checkedGoodsPrice.compareTo(WaynConfig.getFreightLimit()) < 0
                 ? WaynConfig.getFreightPrice()
                 : BigDecimal.ZERO;
+
+        // 订单原始总金额 = 商品金额 + 运费。
+        // 保留原有 orderTotalPrice 口径，避免影响现有订单金额字段语义。
         BigDecimal orderTotalPrice = checkedGoodsPrice.add(freightPrice).max(BigDecimal.ZERO);
+
+        // 满减门槛只计算商品金额，不包含运费。
+        BigDecimal fullReductionPrice = fullReductionCalculateSupport.calculate(checkedGoodsPrice);
 
         ShopMemberCoupon memberCoupon = null;
         BigDecimal couponPrice = BigDecimal.ZERO;
@@ -165,8 +173,10 @@ public class OrderSubmitSupport {
             couponPrice = BigDecimal.valueOf(memberCoupon.getDiscount());
         }
 
-        BigDecimal actualPrice = orderTotalPrice.subtract(couponPrice).max(BigDecimal.ZERO);
-        return new OrderSubmitContext(address, checkedGoodsList, checkedGoodsPrice, freightPrice, orderTotalPrice, couponPrice, actualPrice);
+        // 实付金额 = 商品金额 + 运费 - 满减优惠 - 优惠券优惠。
+        // 暂按满减和优惠券可叠加处理；最终叠加规则仍需结合项目原有优惠券业务确认。
+        BigDecimal actualPrice = orderTotalPrice.subtract(fullReductionPrice).subtract(couponPrice).max(BigDecimal.ZERO);
+        return new OrderSubmitContext(address, checkedGoodsList, checkedGoodsPrice, freightPrice, fullReductionPrice , orderTotalPrice, couponPrice, actualPrice);
     }
 
     /**
